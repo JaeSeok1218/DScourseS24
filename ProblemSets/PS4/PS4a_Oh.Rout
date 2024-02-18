@@ -1,0 +1,75 @@
+
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> url <- "https://www.vizgr.org/historical-events/search.php?format=json&begin_date=00000101&end_date=20240209&lang=en"
+> destination_file <- "downloaded_file.json"
+> download.file(url, destfile = destination_file, method = "auto")
+trying URL 'https://www.vizgr.org/historical-events/search.php?format=json&begin_date=00000101&end_date=20240209&lang=en'
+downloaded 8.8 MB
+
+> 
+> 
+> #wget -O dates.json "https://www.vizgr.org/historical-events/search.php?format=json&begin_date=00000101&end_date=20240209&lang=en"
+> 
+> library(tidyverse)
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
+✔ ggplot2 3.3.0     ✔ purrr   0.3.4
+✔ tibble  3.0.1     ✔ dplyr   0.8.5
+✔ tidyr   1.0.2     ✔ stringr 1.4.0
+✔ readr   1.3.1     ✔ forcats 0.5.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+Warning messages:
+1: replacing previous import ‘ellipsis::check_dots_unnamed’ by ‘rlang::check_dots_unnamed’ when loading ‘tibble’ 
+2: replacing previous import ‘ellipsis::check_dots_used’ by ‘rlang::check_dots_used’ when loading ‘tibble’ 
+3: replacing previous import ‘ellipsis::check_dots_empty’ by ‘rlang::check_dots_empty’ when loading ‘tibble’ 
+> library(jsonlite)
+
+Attaching package: ‘jsonlite’
+
+The following object is masked from ‘package:purrr’:
+
+    flatten
+
+> 
+> #setwd("/Users/jaeseokoh/Oklahoma_University/Spring2024/DScourseS24/ProblemSets/PS4")
+> 
+> mylist <- fromJSON('dates.json')
+> mydf <- bind_rows(mylist$result[-1])
+> class(mydf$date)
+[1] "character"
+> head(mydf, 10)
+# A tibble: 10 x 6
+   date  description                       lang  category1 category2 granularity
+   <chr> <chr>                             <chr> <chr>     <chr>     <chr>      
+ 1 1     Tiberius, under order of Augustu… en    By place  Roman Em… year       
+ 2 1     Gaius Caesar and Lucius Aemilius… en    By place  Roman Em… year       
+ 3 1     Gaius Caesar marries Livilla, da… en    By place  Roman Em… year       
+ 4 1     Quirinius becomes a chief adviso… en    By place  Roman Em… year       
+ 5 1     Areius Paianeius becomes Archon … en    By place  Roman Em… year       
+ 6 1     The ''Yuanshi'' era of the Chine… en    By place  Asia      year       
+ 7 1     Confucius is given his first roy… en    By place  Asia      year       
+ 8 1     Emperor Ping of Han China begins… en    By place  Asia      year       
+ 9 1     Former regent Dong Xian commits … en    By place  Asia      year       
+10 1     Sapadbizes, Yuezhi prince and Ki… en    By place  Asia      year       
+> 
+> proc.time()
+   user  system elapsed 
+  3.694   0.362  18.586 
