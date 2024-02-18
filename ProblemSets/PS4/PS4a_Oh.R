@@ -3,7 +3,7 @@ destination_file <- "downloaded_file.json"
 download.file(url, destfile = destination_file, method = "auto")
 
 
-wget -O dates.json "https://www.vizgr.org/historical-events/search.php?format=json&begin_date=00000101&end_date=20240209&lang=en"
+#wget -O dates.json "https://www.vizgr.org/historical-events/search.php?format=json&begin_date=00000101&end_date=20240209&lang=en"
 
 library(tidyverse)
 library(jsonlite)
