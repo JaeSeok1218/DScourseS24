@@ -8,7 +8,7 @@ download.file(url, destfile = destination_file, method = "auto")
 library(tidyverse)
 library(jsonlite)
 
-setwd("/Users/jaeseokoh/Oklahoma_University/Spring2024/DScourseS24/ProblemSets/PS4")
+#setwd("/Users/jaeseokoh/Oklahoma_University/Spring2024/DScourseS24/ProblemSets/PS4")
 
 mylist <- fromJSON('dates.json')
 mydf <- bind_rows(mylist$result[-1])
