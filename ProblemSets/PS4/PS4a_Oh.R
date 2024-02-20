@@ -9,6 +9,7 @@ library(tidyverse)
 library(jsonlite)
 
 #setwd("/Users/jaeseokoh/Oklahoma_University/Spring2024/DScourseS24/ProblemSets/PS4")
+#setwd("/home/ouecon009/DScourseS24/ProblemSets/PS4")
 
 mylist <- fromJSON('dates.json')
 mydf <- bind_rows(mylist$result[-1])
