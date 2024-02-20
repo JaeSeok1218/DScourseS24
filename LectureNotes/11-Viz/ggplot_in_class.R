@@ -2,14 +2,16 @@ library(tidyverse)
 library(ggthemes)
 library(hexbin)
 
+setwd("~/Oklahoma_University/Spring2024/Data_Science/DScourseS24/LectureNotes/11-Viz")
+
 # Example: mpg dataset (city and highway fuel economy for various makes/models/years of automobiles)
 
 # Basic scatter plot
-ggplot(data = mpg, aes(x = cty, y = hwy)) # this plot is empty because we haven't provided any geom's
+ggplot(data = mpg, aes(x = cty, y = hwy)) # this plot is empty because we haven't provided any geom's 
 mpg
 ggplot(data = mpg, aes(x = cty, y = hwy), geom_point()) # this won't work because we have to use "+" to add geom's
-ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_point()
-ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter()
+ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_point() # round-up -> discrete
+ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() # preserve the relationship in real-number scale
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_bw() # if you don't want a gray theme
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_minimal()
 
@@ -23,7 +25,7 @@ ggplot(data = mpg, aes(x = cty, y = hwy, color=year)) + geom_jitter() + theme_mi
 ggplot(data = mpg, aes(x = cty, y = hwy, color=manufacturer)) + geom_jitter() + theme_minimal()
 ggplot(data = mpg, aes(x = cty, y = hwy, color=manufacturer)) + geom_line() + theme_minimal()
 ggplot(data = mpg, aes(x = cty, y = hwy, color=as.factor(year))) + geom_jitter() + theme_minimal()
-ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_label(manufacturer) + theme_minimal()
+ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_label(manufacturer) + theme_minimal() # wrong syntax
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_label(aes(label=manufacturer)) + theme_minimal()
 
 
@@ -48,7 +50,7 @@ ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_minimal() + fa
 
 
 # Use other themes from ggthemes package
-ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_gdocs() + facet_wrap(vars(as.factor(year)), ncol = 4)
+ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_gdocs() + facet_wrap(vars(as.factor(year)), ncol = 2)
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_economist() + facet_wrap(vars(as.factor(year)), ncol = 4)
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_economist_white() + facet_wrap(vars(as.factor(year)), ncol = 4)
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_fivethirtyeight() + facet_wrap(vars(as.factor(year)), ncol = 4)
