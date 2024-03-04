@@ -2,7 +2,7 @@ library(httr)
 library(jsonlite)
 library(ggplot2)
 
-setwd("/Users/jaeseokoh/Oklahoma_University/Spring2024/Data_Science/DScourseS24/ProblemSets/PS5")
+setwd("/Users/jaeseokoh/Oklahoma_University/Spring2024/Data_Science/DScourseS24/ProblemSets/PS5") # working directory
 
 endpoint = "series/observations"
 params1 = list(
