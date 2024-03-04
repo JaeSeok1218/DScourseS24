@@ -70,11 +70,12 @@ filtered_data_re <- shoeretail %>%
 # Plot shoeretail data
 p <- ggplot(filtered_data_re, aes(x = date, y = log_value)) +
   geom_line(color = "blue") +
-  labs(title = "Compare Retail Stores to Cumstomer Expenditure", x = "Date", y = "Value") +
-  theme_minimal()
+  labs(x = "Date", y = "Value") +
+  theme_minimal()+
+  scale_color_manual(name = "Line Name", values = c("Shoe Retail" = "blue", "Shoe Stores" = "red"))
 
 # Add shoestores data to the plot
-p <- p + geom_line(data = filtered_data_st, aes(x = date, y = log_value), color = "red")
+p <- p + geom_line(data = filtered_data_st, aes(x = date, y = log_value), color = "red") 
 
 # Show the plot
 print(p)
