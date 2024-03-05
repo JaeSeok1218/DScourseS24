@@ -6,13 +6,13 @@ setwd("/Users/jaeseokoh/Oklahoma_University/Spring2024/Data_Science/DScourseS24/
 
 endpoint = "series/observations"
 params1 = list(
-  api_key = "9479ebdfd89daefc64b2dc7c9eeb9c45",
+  api_key = "My API Key",
   file_type = "json",
   series_id = "DFTWRX1A020NBEA"
 )
 
 params2 = list(
-  api_key = "9479ebdfd89daefc64b2dc7c9eeb9c45",
+  api_key = "My API Key",
   file_type = "json",
   series_id = "MRTSSM4482USS"
 )
