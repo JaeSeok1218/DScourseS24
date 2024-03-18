@@ -224,7 +224,3 @@ print(paste("The minimum of f(beta,y,X) is ", beta, sep = ""))
 
 ## Closed-form solution
 print(summary(lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width+Species,data=iris)))
-
-
-
-
