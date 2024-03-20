@@ -32,10 +32,8 @@ table(df_comp$inter)
 
 # Compare hgc with missing logwage and complete logwage
 boxplot(hgc ~ is.na(logwage), data = df, main = "Boxplot of hgc by logwage missingness", xlab = "Missing logwage")
-# Export the boxplot
-png("hgc_missing_logwage.png")
-
-
+# Export the boxplot as a .png file into the working directory
+png("hgc_boxplot.png")
 
 
 # Summary table
