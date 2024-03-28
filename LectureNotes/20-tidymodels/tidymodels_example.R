@@ -30,7 +30,7 @@ housing_train <- training(housing_split)
 housing_test  <- testing(housing_split)
 
 
-housing_recipe <- recipe(medv ~ ., data = housing_train) %>%
+housing_recipe <- recipe(medv ~ ., data = housing_train) %>% # medv ~ . only medv in the left hand and the others in right hand
   # convert outcome variable to logs
   step_log(all_outcomes()) %>%
   # convert 0/1 chas to a factor
@@ -57,6 +57,7 @@ est.ols <- lm(housing_train_y$medv ~ ., data = housing_train_x)
 ols_predicted <- predict(est.ols, newdata = housing_test_x)
 # Root mean-squared error
 sqrt(mean((housing_test_y$medv - ols_predicted)^2))
+# RSE is larger than MSE from the test data; why? Overfitting? or Underfitting?
 
 
 # easy way
@@ -112,10 +113,12 @@ ols_fit %>% predict(housing_test_prepped) %>%
 # in-sample R^2 was 0.814
 # out-of-sample R^2 is 0.764
 
+#::::::::::::::::::::::::::::::::
+# Lasso Practice with 0.5 penalty
+#::::::::::::::::::::::::::::::::
+# lambda* is the lambda that minimizes prediction error in the validation set
 
-
-
-# now do lasso where we set the penalty
+# now do lasso where we set the penalty to 0.5 -> Leading to underfit under the high penalty
 lasso_spec <- linear_reg(penalty=0.5,mixture=1) %>%       # Specify a model
   set_engine("glmnet") %>%   # Specify an engine: lm, glmnet, stan, keras, spark
   set_mode("regression") # Declare a mode: regression or classification
@@ -181,7 +184,7 @@ rec_res <- rec_wf %>%
     grid = lambda_grid
   )
 
-top_rmse  <- show_best(rec_res, metric = "rmse")
+top_rmse  <- show_best(rec_res, metric = "rmse") # rmse: root of mse
 best_rmse <- select_best(rec_res, metric = "rmse")
 
 # Now train with tuned lambda
