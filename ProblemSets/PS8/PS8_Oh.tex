@@ -1,0 +1,78 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+\usepackage{fontawesome5}
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[table]{xcolor}
+
+\title{Problem Set 7}
+\author{JaeSeok Oh}
+
+\begin{document}
+	\maketitle
+	
+\begin{table}[h]
+	\centering\caption{Regression Result}\centering
+	\begin{tabular}[t]{lc}\toprule  & (1)\\\midrule
+		X1 & \num{1.501}\\ & \vphantom{9} (\num{0.002})\\X2 & \num{-0.996}\\ & \vphantom{8} (\num{0.002})\\X3 & \num{-0.249}\\ & \vphantom{7} (\num{0.002})\\X4 & \num{0.747}\\ & \vphantom{6} (\num{0.002})\\X5 & \num{3.502}\\ & \vphantom{5} (\num{0.002})\\X6 & \num{-1.999}\\ & \vphantom{4} (\num{0.002})\\X7 & \num{0.501}\\ & \vphantom{3} (\num{0.002})\\X8 & \num{0.999}\\ & \vphantom{2} (\num{0.002})\\X9 & \num{1.253}\\ & \vphantom{1} (\num{0.002})\\X10 & \num{1.999}\\ & (\num{0.002})\\\midrule
+		Num.Obs. & \num{100000}\\R2 & \num{0.991}\\R2 Adj. & \num{0.991}\\AIC & \num{144993.2}\\BIC & \num{145097.9}\\Log.Lik. & \num{-72485.615}\\RMSE & \num{0.50}\\\bottomrule
+	\end{tabular}
+	\label{t1:table1}
+\end{table}
+
+Table \ref{t1:table1} shows the result from simple OLS regression in Question 9.
+
+\section*{Q5.}
+\begin{itemize}
+	\item Compared the Column 1 and 2 in Table 2, we can see the difference between $\beta $ and $ \widehat{\beta} $ resulted from the closed-form solution. One would say the closed-form solution result is equal to the true value.
+\end{itemize}
+
+\section*{Q7.}
+\begin{itemize}
+	\item Compared the Column 4 and 5 in Table \ref{t2:table2}, we can see the difference between the results from L-BFGS and from Nelder-Mead. They are almost the same but show a little difference.
+\end{itemize}
+
+\begin{table}[!h]
+	\centering
+	\caption{Comparison of the results}
+	\centering
+	\begin{tabular}[t]{ccccccccc}
+		\toprule 
+		 & TRUE & OLS & Gradient\_Descent & L\_BFGS & Nelder\_Mead & MLE & Easy\_way\\
+		 \midrule
+		\cellcolor{gray!10}{Constant} & \cellcolor{gray!10}{1.50} & \cellcolor{gray!10}{1.5006} & \cellcolor{gray!10}{1.5006} & \cellcolor{gray!10}{1.5006} & \cellcolor{gray!10}{1.5003} & \cellcolor{gray!10}{1.5006} & \cellcolor{gray!10}{1.5006}\\
+		$\beta_{1}$ & -1.00 & -0.9956 & -0.9956 & -0.9956 & -0.9957 & -0.9956 & -0.9956 \\
+		\cellcolor{gray!10}{$\beta_{2}$} & \cellcolor{gray!10}{-0.25} & \cellcolor{gray!10}{-0.2486} & \cellcolor{gray!10}{-0.2486} & \cellcolor{gray!10}{-0.2486} & \cellcolor{gray!10}{-0.2483} & \cellcolor{gray!10}{-0.2486} & \cellcolor{gray!10}{-0.2486}\\
+		$\beta_{3}$ & 0.75 & 0.7472 & 0.7472 & 0.7472 & 0.7471 & 0.7472 & 0.7472\\
+		\cellcolor{gray!10}{$\beta_{4}$} & \cellcolor{gray!10}{3.50} & \cellcolor{gray!10}{3.5018} & \cellcolor{gray!10}{3.5018} & \cellcolor{gray!10}{3.5018} & \cellcolor{gray!10}{3.5016} & \cellcolor{gray!10}{3.5018} & \cellcolor{gray!10}{3.5018}\\\addlinespace
+		$\beta_{5}$ & -2.00 & -1.9994 & -1.9994 & -1.9994 & -1.9997 & -1.9994 & -1.9994\\
+		\cellcolor{gray!10}{$\beta_{6}$} & \cellcolor{gray!10}{0.50} & \cellcolor{gray!10}{0.5011} & \cellcolor{gray!10}{0.5011} & \cellcolor{gray!10}{0.5011} & \cellcolor{gray!10}{0.5013} & \cellcolor{gray!10}{0.5011} & \cellcolor{gray!10}{0.5011}\\
+		$\beta_{7}$ & 1.00 & 0.9987 & 0.9987 & 0.9987 & 0.9989 & 0.9987 & 0.9987\\
+		\cellcolor{gray!10}{$\beta_{8}$} & \cellcolor{gray!10}{1.25} & \cellcolor{gray!10}{1.2528} & \cellcolor{gray!10}{1.2528} & \cellcolor{gray!10}{1.2528} & \cellcolor{gray!10}{1.2527} & \cellcolor{gray!10}{1.2528} & \cellcolor{gray!10}{1.2528}\\
+		$\beta_{9}$ & 2.00 & 1.9994 & 1.9994 & 1.9994 & 1.9989 & 1.9994 & 1.9994\\
+		\addlinespace\cellcolor{gray!10}{$Var(\beta - \widehat{\beta})$(e-5)} & \cellcolor{gray!10}{0.00} & \cellcolor{gray!10}{0.43953} & \cellcolor{gray!10}{0.43954} & \cellcolor{gray!10}{0.43953} & \cellcolor{gray!10}{0.44349} & \cellcolor{gray!10}{0.43953} & \cellcolor{gray!10}{0.43953}\\
+		\bottomrule
+	\end{tabular}
+	\label{t2:table2}
+\end{table}
+	
+\section*{Q9.}
+\begin{itemize}
+	\item To compare the results of different methods, I have constructed Table \ref{t2:table2}. The bottom row displays the variance $ Var\left(\beta - \widehat{\beta}\right) $, indicating the extent to which the estimates deviate from the true value $ \beta $. These values are so small that they appear to be consistent with the true value.
+\end{itemize}
+
+
+
+\end{document}
