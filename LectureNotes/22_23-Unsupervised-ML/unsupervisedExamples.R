@@ -19,6 +19,16 @@ print(clusters)
 # compare k-means classes with actual classes
 print(table(Y,clusters$cluster))
 
+# try k-means with only two variables
+library(tidyverse)
+clusterB <- X %>% select(-Sepal.Width) %>% kmeans(3)
+print(table(Y, clusterB$cluster))
+
+plot(X$Sepal.Length, X$Petal.Length)
+
+# 2-means clustering
+clusterC <- X %>% kmeans(2)
+print(table(Y, clusterC$cluster))
 
 #-------------------------------
 # EM using the iris dataset
