@@ -33,9 +33,14 @@ print(table(Y, clusterC$cluster))
 #-------------------------------
 # EM using the iris dataset
 #-------------------------------
+
+Xhat <- X %>% mutate(p1 = runif(dim(X)[1])) # Prior probabilities
+
 # call the EM clustering function from the mclust package
 clusters <- X %>% Mclust(G=3)
 # equivalently: clusters <- Mclust(X,G=3)
+
+clustersKM <- clusters
 
 # list inferred probabilities of Pr(Y=y)
 print(clusters$parameters$pro)
