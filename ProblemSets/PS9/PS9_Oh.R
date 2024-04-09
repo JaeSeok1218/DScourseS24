@@ -18,7 +18,7 @@ housing_recipe <- recipe(medv ~ ., data = housing) %>%
   step_log(all_outcomes()) %>%
   step_bin2factor(chas) %>%
   step_interact(terms = ~ crim:zn:indus:rm:age:rad:tax:ptratio:b:lstat:dis:nox) %>%
-  step_poly(crim,zn,indus,rm,age,rad,tax,ptratio,b,lstat,dis,nox, degree=6)
+  step_poly(crim,zn,indus,rm,age,rad,tax,ptratio,b,lstat,dis,nox, degree=6) 
 
 # Run the recipte
 housing_prep <- housing_recipe %>% prep(housing_train, retain = TRUE)
@@ -32,7 +32,7 @@ housing_train_y <- housing_train_prepped %>% select(medv)
 housing_test_y <- housing_test_prepped %>% select(medv)
 
 #----------------------------------------------------
-# a LASSO model
+# a-1 LASSO model
 #----------------------------------------------------
 tune_spec <- linear_reg(
   penalty = tune(), # tuning parameter
@@ -71,8 +71,42 @@ collect_metrics() %>% print
 
 top_rmse %>% print(n = 1)
 
-last_fit(final_lasso, split = housing_split) %>%
-  collect_predictions() %>% print
+#----------------------------------------------------
+# a-2 Penalty = 0.00139
+#----------------------------------------------------
+lasso_spec <- linear_reg(penalty=0.00139,mixture=1) %>%       # Specify a model
+  set_engine("glmnet") %>%   # Specify an engine: lm, glmnet, stan, keras, spark
+  set_mode("regression") # Declare a mode: regression or classification
+
+lasso_fit <- lasso_spec %>%
+  fit(medv ~ ., data=housing_train_prepped)
+
+# predict RMSE in sample
+lasso_fit %>% predict(housing_train_prepped) %>%
+  mutate(truth = housing_train_prepped$medv) %>%
+  rmse(truth,`.pred`) %>%
+  print
+
+# predict RMSE out of sample
+lasso_fit %>% predict(housing_test_prepped) %>%
+  mutate(truth = housing_test_prepped$medv) %>%
+  rmse(truth,`.pred`) %>%
+  print
+
+# predict R2 in sample
+lasso_fit %>% predict(housing_train_prepped) %>%
+  mutate(truth = housing_train_prepped$medv) %>%
+  rsq_trad(truth,`.pred`) %>%
+  print
+
+# predict R2 out of sample
+lasso_fit %>% predict(housing_test_prepped) %>%
+  mutate(truth = housing_test_prepped$medv) %>%
+  rsq_trad(truth,`.pred`) %>%
+  print
+
+# in-sample RMSE: 0.137
+# out-of-sample RMSE: 0.188
 
 #----------------------------------------------------
 # b Ridge model
@@ -115,6 +149,42 @@ df <- last_fit(final_lasso, split = housing_split) %>%
 
 
 top_rmse %>% print(n = 1)
+
+#----------------------------------------------------
+# b-2 Penalty = 0.0373
+#----------------------------------------------------
+ridge_spec <- linear_reg(penalty=0.0373,mixture=0) %>%       # Specify a model
+  set_engine("glmnet") %>%   # Specify an engine: lm, glmnet, stan, keras, spark
+  set_mode("regression") # Declare a mode: regression or classification
+
+ridge_fit <- ridge_spec %>%
+  fit(medv ~ ., data=housing_train_prepped)
+
+# predict RMSE in sample
+ridge_fit %>% predict(housing_train_prepped) %>%
+  mutate(truth = housing_train_prepped$medv) %>%
+  rmse(truth,`.pred`) %>%
+  print
+
+# predict RMSE out of sample
+ridge_fit %>% predict(housing_test_prepped) %>%
+  mutate(truth = housing_test_prepped$medv) %>%
+  rmse(truth,`.pred`) %>%
+  print
+
+# predict R2 in sample
+ridge_fit %>% predict(housing_train_prepped) %>%
+  mutate(truth = housing_train_prepped$medv) %>%
+  rsq_trad(truth,`.pred`) %>%
+  print
+
+# predict R2 out of sample
+ridge_fit %>% predict(housing_test_prepped) %>%
+  mutate(truth = housing_test_prepped$medv) %>%
+  rsq_trad(truth,`.pred`) %>%
+  print
+# in-sample RMSE: 0.140
+# out-of-sample RMSE: 0.180
 
 # ----------------------------------------------------
 # Simple regression
