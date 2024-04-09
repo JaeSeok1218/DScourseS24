@@ -1,0 +1,47 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+\usepackage{fontawesome5}
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[table]{xcolor}
+
+\title{Problem Set 9}
+\author{JaeSeok Oh}
+
+\begin{document}
+\begin{Large}
+	\maketitle
+	
+\section*{Q.7-9}
+	\begin{itemize}
+		\item The dimension of the training data is 74, including 6th polynomial for each variables. Since the original data only contains 14 columns, the training data includes 6 times more variables.
+	\end{itemize}
+\subsubsection*{LASSO model}
+	\begin{itemize}
+		\item Under 6-fold cross validation, $ \lambda $ is 0.00139. The out-of-sample RMSE is 0.188, while the in-sample RMSE is 0.137.
+	\end{itemize}
+\subsubsection*{Ridge Regression Model}
+	\begin{itemize}
+		\item Under 6-fold cross validation, $ \lambda $ is 0.0373. The out-of-sample RMSE is 0.180, while the in-sample RMSE is 0.140.
+	\end{itemize}
+
+\section*{Q.10}
+	\begin{itemize}
+		\item L1(LASSO) model is penalizing the object function by the sum of absolute value of parameters, while L2(Ridge) model is penalizing by the sum of square of parameters. Thus, the panelty is larger in the Ridge model.
+		\item Previous model is set with 74 variables and 102 observations in test data. If I set 7 or more polynomial, it would be much more complicated model, which causes overfitting and high bias. To support this, I run a simple linear regression with 74 variables with 102 observations and find that the RMSE is 21.51 which is much higher than the regularized models in this problem set. Therefore, the simple regression with the data set having more rows than columns should cause problem in terms of bias and overfitting.
+	\end{itemize}
+	
+\end{Large}
+\end{document}
