@@ -72,22 +72,23 @@ print(crossprod(v)) # should be identity matrix
 
 # do PCA using base R function prcomp
 prin.comp <- prcomp(X, scale. = T)
-
+ls(prin.comp)
 # show eigen vectors (will be same as v)
 print(prin.comp$rotation)
 
 # show eigen values
 print(prin.comp$sdev^2)
 
-# which components explain the most variance?
+# which components explain the most variance? e.g., 0.729: 72.9% of variance explained by first component
 prop.var.explained <- prin.comp$sdev^2/sum(prin.comp$sdev^2)
 print(prop.var.explained)
 
 # keep only the first three components (since these explain 99.5% of the variance)
 reducedX <- prin.comp$x[,seq(1,3)]
-reducedXlook <- prin.comp$x %>% as.data.frame()
+reducedXlook <- reducedX %>% as.data.frame()
 cormat.new <- reducedXlook %>% cor(.)
 print(cormat.new)
+
 
 ## try EM clustering on reduced data ... can we still get the same answer?
 #-------------------------------
