@@ -1,0 +1,43 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+\usepackage{fontawesome5}
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[table]{xcolor}
+
+\title{Problem Set 10}
+\author{JaeSeok Oh}
+
+\begin{document}
+	\begin{Large}
+		\maketitle
+		
+		\section*{Q.9}
+\begin{table}[h]
+	\centering\caption{Regression Result}\centering
+	\begin{tabular}[t]{lccccc}\toprule  
+		& Logit & Tree & Neural Network & kNN & SVM \\\midrule
+		Opt Value & 0.846 & 0.859 & 0.845 & 0.839 & \\
+		\bottomrule
+	\end{tabular}
+	\label{t1:table1}
+	\end{table}
+	\begin{itemize}
+		\item The accuracy is not much different, but the tree model shows the highest accuracy here. This may come from the structure of the tree model which uses the inverse deduction - likely to examine the causality.
+		\item I cannot get the result for \textbf{svm} model since R is stucked in the middle of the code.
+	\end{itemize}
+		
+	\end{Large}
+\end{document}
