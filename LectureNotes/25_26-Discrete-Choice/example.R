@@ -1,10 +1,9 @@
-
 library(tidyverse)
 library(magrittr)
 library(mlogit)
 data(Heating) # load data on residential heating choice in CA
-levels(Heating$depvar) <- c("gas","gas","elec","elec","elec")
-estim <- glm(depvar ~ income+agehed+rooms+region,
+levels(Heating$depvar) <- c("gas","gas","elec","elec","elec") # gas is treated as the base category
+estim <- glm(depvar ~ as.factor(income)+agehed+rooms+region,
              family=binomial(link='logit'),data=Heating)
 print(summary(estim))
 
@@ -12,23 +11,28 @@ print(summary(estim))
 Heating %<>% mutate(predLogit = predict(estim, newdata = Heating, type = "response"))
 Heating %>% `$`(predLogit) %>% summary %>% print
 
-estim2 <- glm(depvar ~ income+agehed+rooms+region,
+estim2 <- glm(depvar ~ as.factor(income)+agehed+rooms+region,
               family=binomial(link='probit'),data=Heating)
 print(summary(estim2))
 Heating %<>% mutate(predProbit = predict(estim2, newdata = Heating, type = "response"))
 Heating %>% `$`(predProbit) %>% summary %>% print
 
 # counterfactual policy
-estim$coefficients["income"] <- 4*estim$coefficients["income"]
+estim$coefficients["as.factor(income)5"] <- 4*estim$coefficients["as.factor(income)5"]
+estim$coefficients["as.factor(income)6"] <- 4*estim$coefficients["as.factor(income)6"]
+estim$coefficients["as.factor(income)7"] <- 4*estim$coefficients["as.factor(income)7"]
+
 Heating %<>% mutate(predLogitCfl = predict(estim, newdata = Heating, type = "response"))
 Heating %>% `$`(predLogitCfl) %>% summary %>% print
 
+Heating$prdiff <- Heating$predLogitCfl - Heating$predLogit
+summary(Heating$prdiff)
 
 # heckman selection
 library(sampleSelection)
 data('Mroz87')
 Mroz87 %<>% mutate(kids = (kids5 + kids618) > 0)
-Mroz87 <- Mroz87 %>% mutate(log_wageNA = case_when(wage==0 ~ NA_real_, TRUE ~ log(wage)))
+Mroz87 <- Mroz87 %>% mutate(log_wageNA = case_when(wage==0 ~ NA_real_, TRUE ~ log(wage))) # 1. see the percentage change 2. do not allow the wage to be less than zero 3.adjust the skwedness
 Mroz87 <- Mroz87 %>% mutate(log_wage   = case_when(wage==0 ~ 0, TRUE ~ log(wage)))
 # Comparison of linear regression and selection model
 outcome1 <- lm(log_wageNA ~ exper, data = Mroz87)
